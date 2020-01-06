@@ -1,6 +1,0 @@
-/.bundle/
-/.yardoc
-/Gemfile.lock
-/spec/support/dependencies
-/spec/support/.bundle
-/spec/support/*.lock

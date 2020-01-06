@@ -1,4 +1,0 @@
----
-name: Metrics test
-services:
-  - logstash
