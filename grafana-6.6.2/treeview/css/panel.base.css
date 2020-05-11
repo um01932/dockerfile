@@ -45,13 +45,17 @@ panel-plugin-grafana-plugin-template-webpack .hello {
 
 .treeRoot input[type=checkbox] + label > div:before {
 	display: inline-block;
-	content: '⚫';
-	color: yellow;
+	content: ' ';
+	background-color: orange;
+	width: 10px;
+	height: 10px;
+	margin-right: 5px;
+	border-radius: 100%;
 }
 
 .treeRoot input[type=checkbox] + label > div.green:before {
-	color: green;
+	background-color: green;
 }
 .treeRoot input[type=checkbox] + label > div.red:before {
-	color: red;
+	background-color: red;
 }
