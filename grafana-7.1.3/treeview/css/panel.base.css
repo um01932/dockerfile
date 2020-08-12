@@ -1,0 +1,61 @@
+@charset "UTF-8";
+panel-plugin-grafana-plugin-template-webpack .hello {
+  font-size: 14pt; }
+  
+ .treeRoot{
+	height: 100%;
+	overflow-y: auto;
+ }
+
+.treeRoot label {
+  cursor: pointer; }
+
+.treeRoot input {
+  display: none; }
+
+.treeRoot > ul,
+.treeNode > ul {
+  padding-left: 1.25em;
+  list-style: none; }
+
+.treeNode > ul {
+  max-height: 0;
+  overflow-y: hidden; }
+
+:checked ~ .treeNode > ul {
+  max-height: initial; }
+
+.treeRoot input[type=checkbox] + label::before {
+  content: '▶';
+  margin-right: .5em;
+  display: inline-block;
+  vertical-align: middle;
+  font: icon;
+  line-height: 0; }
+
+.treeRoot input[type=checkbox]:checked + label::before {
+  content: '◢'; }
+
+.treeRoot input[type=checkbox]:disabled + label:before {
+  visibility: hidden; }
+
+.treeRoot input[type=checkbox] + label > div {
+	display: inline-block;
+}
+
+.treeRoot input[type=checkbox] + label > div:before {
+	display: inline-block;
+	content: ' ';
+	background-color: orange;
+	width: 10px;
+	height: 10px;
+	margin-right: 5px;
+	border-radius: 100%;
+}
+
+.treeRoot input[type=checkbox] + label > div.green:before {
+	background-color: green;
+}
+.treeRoot input[type=checkbox] + label > div.red:before {
+	background-color: red;
+}

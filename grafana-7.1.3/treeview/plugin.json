@@ -1,0 +1,22 @@
+{
+  "type": "panel",
+  "name": "TreeView",
+  "id": "bmw-treeview",
+  "info": {
+    "description": "TreeView plugin",
+    "author": {
+      "name": "qxo0742",
+      "url": ""
+    },
+    "keywords": [ ],
+    "logos": { },
+    "links": [ ],
+    "screenshots": [ ],
+    "version": "0.1",
+    "updated": "2020-04-15"
+  },
+  "dependencies": {
+    "grafanaVersion": "4.6.x",
+    "plugins": [ ]
+  }
+}

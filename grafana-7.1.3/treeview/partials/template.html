@@ -1,0 +1,21 @@
+<div class="treeRoot">
+    <ul>
+        <li ng-repeat="node in parents">
+            <input ng-disabled="!node.children.length" type="checkbox" id="node_{{node.id}}">
+            <label for="node_{{node.id}}"> <div ng-class="node.sts == 'S' ? 'green' : (node.sts == 'F' ? 'red' : '')">{{node.text}}</div> </label>
+
+            <div class="treeNode" ng-if="node.children.length" ng-include="'childrenTemplate'"></div>
+        </li>
+    </ul>
+</div>
+
+<script type="text/ng-template" id="childrenTemplate">
+    <ul>
+        <li ng-repeat="node in node.children">            
+            <input ng-disabled="!node.children.length" type="checkbox" id="node_{{node.id}}">
+            <label for="node_{{node.id}}"> <div ng-class="node.sts == 'S' ? 'green' : (node.sts == 'F' ? 'red' : '')">{{node.text}}</div> </label>
+
+            <div class="treeNode" ng-if="node.children.length" ng-include="'childrenTemplate'"></div>
+        </li>
+    </ul>
+</script>
