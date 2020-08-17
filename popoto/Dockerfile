@@ -1,5 +1,4 @@
 FROM debian:stretch
-MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
 # Updating system
 RUN apt-get update && apt-get upgrade -y
