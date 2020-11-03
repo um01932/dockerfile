@@ -112,6 +112,8 @@ var Ctrl = function (_MetricsPanelCtrl) {
         key: '_onDataReceived',
         value: function _onDataReceived(data) {
             // Group data by level
+	    this.$scope.nodeLevels = [];
+            this.$scope.parents = [];
             var groupByLevel = {};
             var maxLevel = -1;
             for (var i = 0; i < data[0].rows.length; i++) {
