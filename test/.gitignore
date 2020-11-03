@@ -1,0 +1,9 @@
+
+# /
+/.idea
+/itowp_api.zip
+/node_modules
+/dist
+/lib
+/doc/generated
+.npmrc

@@ -1,0 +1,14 @@
+{
+  "namespace": "mwp",
+  "fsNamespace": "mwp",
+  "loader": "../mwp.js",
+  "core": "mwp.xoba165y.js",
+  "corePolyfilled": "mwp.fk98qybl.js",
+  "components": {
+    "mwp-image": {
+      "bundleIds": {
+        "$": "nvlcwqe3"
+      }
+    }
+  }
+}

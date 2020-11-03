@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iFrame Widget TEST</title>
+    <script type="text/javascript" src="/workplace-api/es6-promise.js"></script>
+    <script type="text/javascript" src="/workplace-api/workplace-api.js"></script>
+</head>
+<body>
+<label>Schauen Sie sich bitte den Einkaufswagen auf Einkaufswidget an, nachdem Sie auf den Buttons geklickt
+    haben</label><br/>
+<button style="margin-top: 10px;" onclick="addItemToFirstIFrameWidget()">Eintragen</button>
+<button style="margin-top: 10px;" onclick="removeItemFromFirstIFrameWidget()">Löschen</button>
+<script>
+    var addedIds = [];
+    var shoppingItems = ['Milch', 'Wasser', 'Senf', 'Seife', 'Gemuese', 'Obst', 'neues Auto', 'Bier, wie sonst'];
+
+    if (Messaging.isWorkplaceEnv()) {
+        Messaging.getClient().then(function (client) {
+
+            client.registerApi('beforeClose', function () {
+                return new Promise(function (resolve, reject) {
+                    console.log('calling beforeClose on iframe widget 2. Will resolve immediately, but you would do your magic here');
+                    setTimeout(resolve, 2000);
+                });
+            });
+
+            client.registerApi('close', function () {
+                return new Promise(function (resolve, reject) {
+                    console.log('calling close on iframe widget 2. Will resolve immediately, but you would do your magic here');
+                    setTimeout(resolve, 2000);
+                });
+            });
+        });
+
+        function addItemToFirstIFrameWidget() {
+            Messaging.getClient().then(function (client) {
+                client.callApi('connect', {id: 'iframe-widget-1'}).then(function (connection) {
+                    console.log('iframe widget 2 -> connection to client iframe widget 1 has been established');
+                    connection.callApi('addListItem', [shoppingItems[Math.floor(Math.random() * shoppingItems.length)]]).then(function (result) {
+                        console.log('iframe widget 2 -> a list item has been created in iframe widget 2, and it has the following id: ' + result);
+                        addedIds.push(result);
+                    });
+                });
+            });
+        }
+
+        function removeItemFromFirstIFrameWidget() {
+            Messaging.getClient().then(function (client) {
+
+                if (addedIds.length === 0) {
+                    console.log('iframe widget 2 -> no more items left in iframe widget 1');
+                    return;
+                }
+
+                var id_to_remove = addedIds.pop();
+                client.callApi('connect', {id: 'iframe-widget-1'}).then(function (connection) {
+                    console.log('iframe widget 2 -> connection to client iframe widget 1 has been established');
+                    connection.callApi('deleteListItem', [id_to_remove]).then(function (result) {
+                        console.log('iframe widget 2 -> the following id has been removed from iframe widget 1: ' + id_to_remove + ' the new list size there is: ' + result);
+                    });
+                });
+            });
+        }
+    }
+</script>
+</body>
+</html>

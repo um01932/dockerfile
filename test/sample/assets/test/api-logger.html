@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API TEST</title>
+    <script type="text/javascript" src="/workplace-api/es6-promise.js"></script>
+    <script type="text/javascript" src="/workplace-api/workplace-api.js"></script>
+</head>
+<body>
+  <script>
+      //store connections for console access
+      var connections = {};
+      if(Messaging.isWorkplaceEnv()) {
+          Messaging.getClient().then(function(client) {
+
+              // Handle connections from other apps
+              client.onConnect(function(from, connection) {
+
+                  connections[from] = connection;
+
+                  // register a handler for the API function 'log'
+                  connection.registerApi('log', function() {
+                      console.log('api-logger.html -> log:', arguments);
+                      return new Promise(function(resolve, reject) {
+                          // resolve promise with any return value
+                          resolve({
+                              fn: 'log',
+                              arguments: Array.prototype.slice.call(arguments)
+                          });
+                      });
+                  });
+              });
+
+          });
+      }
+  </script>
+</body>
+</html>

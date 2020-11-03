@@ -1,0 +1,51 @@
+[{
+  "id": "ipdm",
+  "description": "iPDM Dashboard",
+  "iconCls": "iwp-icon-iwp_dashboard",
+  "helpUrl": "",
+  "type": 0,
+  "locked": false,
+  "frames": [{
+    "widget": {
+      "id": "iram",
+      "title": "iRAM",
+      "type": "iframe",
+      "iconCls": "",
+      "dataUrlContextParams": [
+        "lang",
+        "env",
+        "role",
+        "persondeputized"
+      ],
+      "controls": [
+      ],
+      "customSettings": "{\"url\": \"./assets/test/layoutFrame.html\"}",
+      "defaultSettings": ""
+    },
+    "sortPos": 1,
+    "width": 0.7,
+    "minSize": 200,
+    "height": 1
+  }, {
+    "widget": {
+      "id": "proco",
+      "title": "Prozesscockpit",
+      "type": "iframe",
+      "iconCls": "",
+      "dataUrlContextParams": [
+        "lang",
+        "env",
+        "role",
+        "persondeputized"
+      ],
+      "controls": [],
+      "customSettings": "{\"url\": \"./assets/test/layoutFrame2.html\"}",
+      "defaultSettings": ""
+    },
+    "sortPos": 2,
+    "width": 0.3,
+    "minSize": 200,
+    "height": 1
+  }]
+}]
+

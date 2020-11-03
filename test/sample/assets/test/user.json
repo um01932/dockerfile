@@ -1,0 +1,116 @@
+{
+  "name": "Klaus",
+  "surname": "Banzer",
+  "description": null,
+  "userId": "123",
+  "roles": [
+    {
+      "roleDescription": "Modulleiter",
+      "roleId": "ML",
+      "sortPos": 100,
+      "diffValues": [
+        {
+          "type": "moduleOrg",
+          "name": "ModulOrg",
+          "value": "FA"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "G01"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "G02"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "G08"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "G03"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "G30"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "G31"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "G32"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "F20"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "F21"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "F22"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "F30"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "F31"
+        },
+        {
+          "type": "derivative",
+          "name": "Derivat",
+          "value": "F32"
+        }
+      ]
+    },
+    {
+      "roleDescription": "SE-Teamleiter",
+      "roleId": "SE_TL",
+      "sortPos": 120,
+      "diffValues": [
+        {
+          "type": "moduleOrg",
+          "value": "IC04",
+          "isResponsible": "1",
+          "name": "ModulOrg"
+        },
+        {
+          "type": "derivative",
+          "value": "F32",
+          "isResponsible": "1",
+          "name": "Derivat"
+        },
+        {
+          "type": "derivative",
+          "value": "F34",
+          "isResponsible": "1",
+          "name": "Derivat"
+        },
+        {
+          "type": "derivative",
+          "value": "F35",
+          "isResponsible": "1",
+          "name": "Derivat"
+        }
+      ]
+    }
+  ]
+}

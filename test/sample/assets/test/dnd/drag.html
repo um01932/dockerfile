@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Drag</title>
+    <script type="text/javascript" src="/workplace-api/es6-promise.js"></script>
+    <script type="text/javascript" src="/workplace-api/workplace-api.js"></script>
+    <script type="text/javascript" src="interact.min.js"></script>
+    <style type="text/css">
+        .draggable {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+            top: 50%;
+            left: 50%;
+            background-color: #00b0e8;
+            color: #fff;
+            text-align: center;
+            line-height: 200px;
+            font-size: 20px;
+            font-family: sans-serif;
+        }
+        .dragging {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+<div class="draggable">DRAG</div>
+<script>
+
+    Messaging.getClient().then(function(client) {
+
+        // neccessary to allow mouse events being captured outside of the current frame during a drag
+        document.addEventListener('mousedown', function(event) {
+            event.preventDefault();
+        });
+
+        // this example is using the library interactjs - other libraries have their equivalents
+        interact(document.querySelector('.draggable')).draggable({
+            onstart: function(event) {
+                event.target.classList.add('dragging');
+                client.callApi('setDragObject', {
+                    dragText: 'Description of drag object',
+                    // initial position in page coordinates
+                    position: {
+                        x: event.x0,
+                        y: event.y0
+                    },
+                    data: {
+                        timestamp: (new Date()).getTime()
+                    }
+                });
+            },
+            onmove: function(event) {
+                // send updated page coordinates
+                client.callApi('setDragCoordinates', {x: event.pageX, y: event.pageY});
+            },
+            onend: function(event) {
+                event.target.classList.remove('dragging');
+                // drag has ended
+                client.callApi('setDragObject');
+
+            }
+        });
+
+        // clean up on dragEnded event
+        client.registerApi('dragEnded', function() {
+            document.querySelector('.draggable').classList.remove('dragging');
+            interact.stop();
+        });
+
+    });
+
+</script>
+</body>
+</html>

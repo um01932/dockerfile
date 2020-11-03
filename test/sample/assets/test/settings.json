@@ -1,0 +1,53 @@
+[
+  {
+    "id": "1",
+    "description": "startup",
+    "iconCls": "iwp-icon-gen_settings",
+    "optionsList": [
+      {
+        "id": "home",
+        "description": "startdashboard",
+        "enabled": false,
+        "values": [
+          "home"
+        ]
+      },
+      {
+        "id": "2",
+        "description": "savelaststate",
+        "enabled": true,
+        "values": []
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "description": "termsOfUse",
+    "iconCls": "iwp-icon-gen_info",
+    "optionsList": [
+      {
+        "id": "123",
+        "description": "termsOfUseAccepted",
+        "values": [
+          "1"
+        ],
+        "enabled": false
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "description": "profileImage",
+    "optionsList": [
+      {
+        "id": "4",
+        "description": "profileImageSet",
+        "values": [
+          null
+        ],
+        "enabled": false
+      }
+    ],
+    "iconCls": "iwp-icon-gen_image"
+  }
+]

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ItO Workplace 3D Viewer</title>
+    <script type="text/javascript" src="/workplace-api/es6-promise.js"></script>
+    <script type="text/javascript" src="/workplace-api/workplace-api.js"></script>
+    <script type="text/javascript" src="https://livaas2-web.bmwgroup.net/repo/webvis/webvis.js"></script>
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../scripts/3dviewer.js"></script>
+</head>
+<body>
+<style>
+    html {
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, "sans-serif";
+        font-size: 10pt;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-touch-callout: none;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .treeView {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 375px;
+        min-width: 375px;
+        z-index: 3;
+        height: calc(100% - 305px);
+        max-width: calc(100% - 100px);
+    }
+
+    .treeView.animate {
+        -webkit-transition: height 0.3s ease-in-out, width 0.3s ease-in-out;
+        transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+        min-width: inherit;
+    }
+
+    .treeView .resize-content-wrapper {
+        padding-top: 40px;
+        border: solid 1px rgba(0, 0, 0, 0.26);
+        border-style: none;
+        box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.12);
+        box-sizing: border-box;
+    }
+
+    .treeView .buttons {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f2f2f2;
+        color: #666666;
+    }
+
+    .deleteNodes {
+        float: right;
+    }
+
+    .treeView.closed {
+        width: 106px !important;
+        height: 40px;
+        min-width: inherit;
+        overflow: hidden;
+    }
+
+    .treeView.closed .resize-handle-wrapper {
+        display: none;
+    }
+
+    .treeView .treeToggle {
+        float: left;
+    }
+
+    .treeView .treeToggle.treeToggleMore {
+        display: none;
+    }
+
+    .treeView.closed .treeToggle.treeToggleMore {
+        display: inherit;
+    }
+
+    .treeView.closed .treeToggle.treeToggleLess {
+        display: none;
+    }
+
+    #viewerdiv {
+        flex: 1;
+        height: 100%;
+        width: 100%;
+    }
+
+    #enclosure {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+        background-image: -o-linear-gradient(bottom, #DDDDDD 85%, #CCCCCC 100%);
+        background-image: -moz-linear-gradient(bottom, #DDDDDD 85%, #CCCCCC 100%);
+        background-image: -webkit-linear-gradient(bottom, #DDDDDD 85%, #CCCCCC 100%);
+        background-image: -ms-linear-gradient(bottom, #DDDDDD 85%, #CCCCCC 100%);
+        background-image: linear-gradient(bottom, #DDDDDD 85%, #CCCCCC 100%);
+    }
+
+    #notifier {
+        position: absolute;
+        top: 8px;
+        left: calc(50% - 250px);
+        width: 500px;
+        z-index: 4;
+    }
+
+    #toolbar {
+        position: absolute;
+        right: 0;
+        top: 180px;
+        z-index: 3;
+    }
+
+    #branding {
+        display: none;
+    }
+
+    #buttonsDiv {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        z-index: 10;
+    }
+
+    #tools {
+        pointer-events: none;
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+        height: 200px;
+    }
+
+    .tools-area {
+        width: 100%;
+        height: 200px;
+        bottom: 0;
+        position: absolute;
+        -webkit-transition: transform 0.3s ease-in-out;
+        transition: transform 0.3s ease-in-out;
+        transform: translateY(168px);
+        z-index: 3;
+    }
+
+    .toolsToggle {
+        position: absolute;
+        left: 50%;
+        margin-left: -200px;
+        top: -8px;
+    }
+
+    .tools-area.expanded {
+        transform: translateY(0);
+    }
+
+    .tools-area.expanded .toolsToggleExpand {
+        display: none;
+    }
+
+    .tools-area.expanded .toolsToggleCollapse {
+        display: inherit;
+    }
+
+    .tools-area .toolsToggleCollapse {
+        display: none;
+    }
+
+    @media (max-width: 720px) {
+        .treeView {
+            width: 100%;
+            height: 100%;
+            min-width: 100%;
+            max-width: 100%;
+        }
+
+        .resize-content-wrapper.webvis-resizeable {
+            width: 100%;
+        }
+
+        .resize-handle-wrapper.webvis-resizeable {
+            display: none;
+        }
+
+        webvis-gizmo {
+            transform: scale(0.9);
+            transform-origin: right top;
+        }
+
+        .tools-area {
+            display: none;
+        }
+
+        #notifier {
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        #toolbar {
+            bottom: 0;
+            top: auto;
+        }
+
+        #toolbar > div.toolbar.webvis-toolbar {
+            display: flex;
+        }
+    }
+
+    @media (max-width: 370px) {
+        webvis-gizmo {
+            transform: scale(0.8);
+            transform-origin: right top;
+        }
+    }
+
+    @media (max-height: 520px) {
+        #toolbar > div.toolbar.webvis-toolbar {
+            display: flex;
+        }
+    }
+
+</style>
+<div id="enclosure">
+    <webvis-notifier id="notifier"></webvis-notifier>
+    <webvis-toolbar id="toolbar"></webvis-toolbar>
+    <webvis-resizeable id="treeView" class="treeView">
+        <div class="buttons">
+            <paper-icon-button class="treeToggle treeToggleMore" icon="icons:chevron-right"></paper-icon-button>
+            <paper-icon-button class="treeToggle treeToggleLess" icon="icons:chevron-left"></paper-icon-button>
+            <paper-icon-button id="deleteNodes" class="deleteNodes" icon="icons:delete"></paper-icon-button>
+        </div>
+        <webvis-tree></webvis-tree>
+    </webvis-resizeable>
+    <div id="viewerdiv">
+        <!-- webvis-gizmo connectTo="viewer"></webvis-gizmo -->
+        <webvis-viewer id="viewer"></webvis-viewer>
+    </div>
+    <div class="tools-area">
+        <paper-icon-button class="toolsToggle toolsToggleExpand" icon="icons:expand-less"></paper-icon-button>
+        <paper-icon-button class="toolsToggle toolsToggleCollapse" icon="icons:expand-more"></paper-icon-button>
+        <webvis-tools id="tools"></webvis-tools>
+    </div>
+</div>
+<script>
+
+    var treeToggle = $('.treeToggle');
+    var treeView = $('#treeView');
+    var toolsToggle = $('.toolsToggle');
+    var toolsDiv = $('.tools-area');
+    var btnDeleteNodes = $('#deleteNodes');
+
+    treeToggle.on('click', toggleTree);
+    btnDeleteNodes.on('click', deleteNodes);
+
+    toolsToggle.on('click', function () {
+        toolsDiv.toggleClass('expanded');
+    });
+
+    function toggleTree() {
+        treeView.toggleClass('animate');
+        setTimeout(function () {
+            treeView.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
+                    function (e) {
+                        treeView.removeClass('animate');
+                    });
+            treeView.toggleClass('closed');
+        });
+    }
+
+    function deleteNodes() {
+        webvis.remove();
+    }
+</script>
+</body>
+</html>

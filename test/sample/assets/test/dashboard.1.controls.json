@@ -1,0 +1,14 @@
+[
+  {
+    "control": "settings",
+    "options": [
+      "rename",
+      "add_favorite",
+      "add_category"
+    ]
+  },
+  {
+    "control": "refresh",
+    "options": []
+  }
+]

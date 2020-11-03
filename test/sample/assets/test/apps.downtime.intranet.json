@@ -1,0 +1,66 @@
+{
+  "en" : [
+    {
+      "name": "Application EN",
+      "desc": "Application EN",
+      "url": "#",
+      "mobile": false
+    },
+    {
+      "name": "AApplication EN",
+      "desc": "AApplication EN",
+      "url": "#",
+      "mobile": true
+    },
+    {
+      "name": "BApplication EN",
+      "desc": "BApplication EN",
+      "url": "#",
+      "mobile": false
+    },
+    {
+      "name": "ZApplication EN",
+      "desc": "ZApplication EN",
+      "url": "#",
+      "mobile": true
+    },
+    {
+      "name": "Xpplication1 EN",
+      "desc": "Xpplication1 EN",
+      "url": "#",
+      "mobile": true
+    }
+  ],
+  "de" : [
+    {
+      "name": "Application DE",
+      "desc": "Application DE",
+      "url": "#",
+      "mobile": true
+    },
+    {
+      "name": "AApplication DE",
+      "desc": "AApplication DE",
+      "url": "#",
+      "mobile": true
+    },
+    {
+      "name": "BApplication DE",
+      "desc": "BApplication DE",
+      "url": "#",
+      "mobile": true
+    },
+    {
+      "name": "ZApplication DE",
+      "desc": "ZApplication DE",
+      "url": "#",
+      "mobile": true
+    },
+    {
+      "name": "Xpplication1 DE",
+      "desc": "Xpplication1 DE",
+      "url": "#",
+      "mobile": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "control": "app-settings",
+    "options": [
+      "help",
+      "open-new-window",
+      "add_favorite",
+      "add_category"
+    ]
+  },
+  {
+    "control": "refresh",
+    "options": []
+  }
+]

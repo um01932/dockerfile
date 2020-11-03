@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API MIRROR TEST</title>
+    <script type="text/javascript" src="/workplace-api/es6-promise.js"></script>
+    <script type="text/javascript" src="/workplace-api/workplace-api.js"></script>
+</head>
+<body>
+<button onclick="connectApp()">Send params over channel</button><br><br>
+<textarea id="mirror" cols="100" rows="20"></textarea>
+<script>
+    var mirrorEl = document.getElementById('mirror');
+    var connectApp;
+    Messaging.getClient().then(function(client) {
+        client.registerApi('onOpenApp', function(from, param) {
+            console.log('received from ' +  from + ":", param);
+            return 'pong';
+        });
+        client.onConnect(function(from, connection) {
+            connection.registerApi('mirrorText', function(text) {
+                mirrorEl.value = text;
+                //use the connection from "api" to call the pinkBack function
+                connection.callApi('pingBack', text);
+            });
+            connection.onClose(function() {
+                console.log('mirror.html -> connection from ' + from + ' has been closed');
+            });
+        });
+        connectApp = function() {
+          client.callApi('openApp', 'api', {param1: 'value1', param2: 'value2'}, {connect: true});
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <title>myWorkplace</title>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=description content="">
+    <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name=format-detection content="telephone=no">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel=stylesheet href=styles/vendor-b7678517ca.css>
+    <link rel=stylesheet href=styles/app-90817af34e.css><!-- build:context -->
+    <!-- will insert a <base> tag with href set to the current application context --><!-- endbuild -->
+    <style>.wrapper {
+        background-color: #efefef !important;
+    }
+
+    .wrapper .spinner-blade {
+        animation: spinner-fade-dark 1s infinite linear;
+    }
+
+    .wrapper .message {
+        margin-top: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #444444;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: normal;
+    }
+
+    .container-wrap.center-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .spinner {
+        position: relative;
+        margin: auto;
+        width: 1em;
+        height: 1em;
+        font-size: 72px;
+    }
+
+    .spinner-blade {
+        position: absolute;
+        left: .4629em;
+        bottom: 0;
+        width: .074em;
+        height: .2777em;
+        border-radius: .0555em;
+        background-color: transparent;
+        transform-origin: center -.2222em;
+    }
+
+    .spinner-blade:nth-child(1) {
+        animation-delay: 0s;
+        transform: rotate(0deg);
+    }
+
+    .spinner-blade:nth-child(2) {
+        animation-delay: 0.083s;
+        transform: rotate(30deg);
+    }
+
+    .spinner-blade:nth-child(3) {
+        animation-delay: 0.166s;
+        transform: rotate(60deg);
+    }
+
+    .spinner-blade:nth-child(4) {
+        animation-delay: 0.249s;
+        transform: rotate(90deg);
+    }
+
+    .spinner-blade:nth-child(5) {
+        animation-delay: 0.332s;
+        transform: rotate(120deg);
+    }
+
+    .spinner-blade:nth-child(6) {
+        animation-delay: 0.415s;
+        transform: rotate(150deg);
+    }
+
+    .spinner-blade:nth-child(7) {
+        animation-delay: 0.498s;
+        transform: rotate(180deg);
+    }
+
+    .spinner-blade:nth-child(8) {
+        animation-delay: 0.581s;
+        transform: rotate(210deg);
+    }
+
+    .spinner-blade:nth-child(9) {
+        animation-delay: 0.664s;
+        transform: rotate(240deg);
+    }
+
+    .spinner-blade:nth-child(10) {
+        animation-delay: 0.747s;
+        transform: rotate(270deg);
+    }
+
+    .spinner-blade:nth-child(11) {
+        animation-delay: 0.83s;
+        transform: rotate(300deg);
+    }
+
+    .spinner-blade:nth-child(12) {
+        animation-delay: 0.913s;
+        transform: rotate(330deg);
+    }
+
+    @keyframes spinner-fade-dark {
+        0% {
+            background-color: #6C7C97;
+        }
+        100% {
+            background-color: transparent;
+        }
+    }</style>
+</head>
+<body class=app-module>
+<div class=view-container ui-view></div>
+<div class="wrapper theme-light container-stretch" id=appLoader>
+    <div class="container-wrap center-content">
+        <div class=spinner>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+            <div class=spinner-blade></div>
+        </div>
+    </div>
+</div>
+<script src=scripts/vendor-980ec78a44.js></script>
+<script src="/workplace-api/workplace-api.js" type="text/javascript"></script>
+<script src=scripts/app-ebcf48cc16.js></script>
+</body>
+</html>

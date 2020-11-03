@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VAAS Simple</title>
+    <script type="text/javascript" src="/workplace-api/es6-promise.js"></script>
+    <script type="text/javascript" src="/workplace-api/workplace-api.js"></script>
+</head>
+<body>
+<div id="start-webvis">
+    <h3>Start Webvis</h3>
+    <button onclick="startWebvis()">Start</button>
+    <p style="display:none;">Webvis Started</p>
+</div>
+<div id="event-webvis" style="display: none;">
+    <h3>Events from Webvis</h3>
+    <textarea cols="100" rows="20"></textarea>
+</div>
+<div id="focus-webvis" style="display:none;">
+    <h3>Focus Webvis</h3>
+    <button onclick="focusWebvis()">Focus</button>
+</div>
+<div id="add-webvis" style="display:none;">
+    <h3>Add node to Webvis</h3>
+    <input type="text" name="uri" placeholder="uri, e.g. urn:bmw:prisma:dokuid:1234567" value="urn:bmw:prisma:dokuid:8835393" />
+    <input type="text" name="contentType" placeholder="content type, e.g. model/jt" value="auto"/>
+    <button onclick="addNodeToWebvis()">Add</button>
+</div>
+<script>
+
+    var webvisConnection;
+    var webvisTabId;
+
+    function startWebvis() {
+
+        Messaging.getClient().then(function(client) {
+            // Open app 'vaas'
+            return client.callApi('openApp', 'vaas').then(function(tabId) {
+                // instance has been opened, remember its tabId
+                webvisTabId = tabId;
+                // connect to the instance
+                return client.callApi('connect', {id: tabId})
+            }).then(function(connection) {
+                // connection has been established
+                enableWebvisFeatures(true);
+                connection.onClose(function() {
+                    enableWebvisFeatures(false);
+                    // connection to webvis has been closed
+                    webvisConnection = null;
+                });
+                // set up a callback function for webvis events
+                connection.registerApi('eventListenerCallback', function(event) {
+                    logEvent(event);
+                });
+                // register the webvis event NODE_CHANGED
+                connection.callApi('registerListener', [0 /* EventType NODE_CHANGED */]);
+                // remember the connection
+                webvisConnection = connection;
+            });
+        });
+    }
+
+    function focusWebvis() {
+        Messaging.getClient().then(function(client) {
+           client.callApi('selectTab', webvisTabId);
+        });
+    }
+
+    function addNodeToWebvis() {
+        var urn = document.getElementById('add-webvis').querySelector('[name=uri]').value;
+        var contentType = document.getElementById('add-webvis').querySelector('[name=contentType]').value;
+        // call webvis API function 'add'
+        webvisConnection.callApi('add', {dataURI: urn, contentType: contentType === 'auto' ? null : contentType }).then(function(nodeId) {
+            // call webvis API function 'setProperty' to display the part
+            webvisConnection.callApi('setProperty', nodeId, 'enabled', true);
+        });
+    }
+
+    function enableWebvisFeatures(enable) {
+        document.getElementById('start-webvis').querySelector('p').style.display = enable ? '' : 'none';
+        document.getElementById('focus-webvis').style.display = enable ? '' : 'none';
+        document.getElementById('add-webvis').style.display = enable ? '' : 'none';
+        document.getElementById('event-webvis').style.display = enable ? '' : 'none';
+        if(!enable) {
+            document.getElementById('event-webvis').querySelector('textarea').value = '';
+        }
+    }
+
+    function logEvent(event) {
+        var ta = document.getElementById('event-webvis').querySelector('textarea');
+        ta.value += '\ntargetNodeID: ' + event.targetNodeID + ', changeList: ' + JSON.stringify(event.changeList);
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>iFrame Widget TEST</title>
+  <script type="text/javascript" src="/workplace-api/es6-promise.js"></script>
+  <script type="text/javascript" src="/workplace-api/workplace-api.js"></script>
+</head>
+<body>
+  <label style="font-size: 16px; font-weight: bold;">Einkaufswagen: </label>
+  <ul style="padding-top: 10px;" id="listOfItems">
+  </ul>
+  <script>
+      if(Messaging.isWorkplaceEnv()) {
+          Messaging.getClient().then(function(client) {
+              if(!client) {
+                  console.log('iframe widget 1 -> client aquisition failed');
+                  return;
+              }
+
+              client.registerApi('refresh', function() {
+                  return new Promise(function (resolve, reject) {
+                      console.log('iFrame Widget 1  -> executing refresh');
+                  });
+              });
+
+              client.registerApi('roleChanged', function(role, persondeputized) {
+                  console.log(role, persondeputized);
+              });
+
+              client.registerApi('beforeClose', function() {
+                  return new Promise(function(resolve, reject) {
+                      console.log('calling beforeClose on iframe widget 1. Will resolve immediately, but you would do your magic here');
+                      resolve();
+                  });
+              });
+
+              client.registerApi('close', function() {
+                  return new Promise(function(resolve, reject) {
+                      console.log('calling close on iframe widget 1. Will resolve immediately, but you would do your magic here');
+                      resolve();
+                  });
+              });
+
+              client.onConnect(function(from, connection) {
+                  connection.registerApi('addListItem', function(itemText) {
+                      return new Promise(function (resolve, reject) {
+                          try {
+                              console.log('iFrame Widget 1 -> addListItem -> adding item with text: ' + itemText);
+                              var listElem = document.getElementById('listOfItems');
+                              var itemElem = document.createElement('li');
+
+                              itemElem.innerHTML = itemText;
+                              itemElem.setAttribute('id', '' + (listElem.getElementsByTagName('li').length + 1));
+                              listElem.appendChild(itemElem);
+                              resolve(itemElem.getAttribute('id'));
+                          } catch (e) {
+                              reject(e.message);
+                          }
+                      });
+                  });
+
+                  connection.registerApi('deleteListItem', function(itemId) {
+                      return new Promise(function (resolve, reject) {
+                          console.log('iFrame Widget 1 -> deleteListItem -> deleting item with id: ' + itemId);
+                          var listElem = document.getElementById('listOfItems');
+                          var itemElem = document.getElementById(itemId);
+
+                          if(!itemElem) {
+                              reject('No such element');
+                              return;
+                          }
+
+                          listElem.removeChild(itemElem);
+                          resolve(listElem.getElementsByTagName('li').length);
+                      });
+                  });
+              });
+          });
+      }
+  </script>
+</body>
+</html>
