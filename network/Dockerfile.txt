@@ -1,5 +1,5 @@
 FROM alpine:3.5
-COPY ping /
+COPY ping .
 RUN apk add iputils    
 
 HEALTHCHECK --interval=5s --timeout=3s \
